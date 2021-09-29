@@ -1,12 +1,46 @@
 #include "EW_FileHandler.h"
 
-int main(void)
+
+int main(int argc, char* argv[])
 {
 	typedef EW_FileHandler fh;
 
-	std::cout << "Welcome to EW_FileHandler\n";
-	std::cout << "Please specify what you wanna do: \n";
+	enum : char
+	{
+		COPY = 'c', DELETE = 'd', NEW = 'n', READ = 'r', WRITE = 'w'
+	};
 
-	std::cout << "Welcome to EW_FileHandler\n";
-	std::cout << "Welcome to EW_FileHandler\n";
+	for (size_t flag = 0; flag < argc; flag = +2)
+	{
+		if (argc % 2 == 0)
+		{
+			switch (*argv[flag])
+			{
+			case 'd':
+				fh::removeFile(*argv[flag + 1]);
+				break;
+
+			case 'n':
+				fh::createFile(*argv[flag + 1]);
+				break;
+
+			case 'r':
+				fh::readFile(*argv[flag + 1]);
+				break;
+
+			default:
+				break;
+			}
+		}
+
+		else if (*argv[flag] == 'c')
+		{
+			fh::copyFile(*argv[flag + 1], *argv[flag + 2]);
+		}
+
+		else if (*argv[flag] == 'w')
+		{
+			fh::writeToFile(*argv[flag + 1], *argv[flag + 2]);
+		}
+	}
 }
