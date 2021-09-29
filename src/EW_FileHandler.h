@@ -8,7 +8,6 @@
 struct EW_FileHandler
 {
 public:
-	static const char* workDir;
 	static void createFile(const char* _path, const char* _msg = "")
 	{
 		std::ifstream __checkExistence(_path);
@@ -54,16 +53,16 @@ public:
 			std::cerr << _path << " not found.\n\n";
 	}
 
-	static void writeToFile(const char* _path, const char* _msg = "")
+	static void writeToFile(const char* _path, const char* _msg)
 	{
-		std::ifstream __existence(_path);
-		if (__existence)
+		std::ifstream __checkExistence(_path);
+		if (__checkExistence)
 		{
 			std::ofstream __newFile(_path);
 
 			if (__newFile)
 			{
-				__newFile << _msg;
+				__newFile << _msg << "\n";
 				__newFile.close();
 			}
 			else std::cerr << "Error writing to file\n";

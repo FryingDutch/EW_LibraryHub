@@ -16,16 +16,16 @@ int main(int argc, char* argv[])
 		{
 			switch (*argv[flag])
 			{
-			case 'd':
-				fh::removeFile(*argv[flag + 1]);
+			case DELETE:
+				fh::removeFile(argv[flag + 1]);
 				break;
 
-			case 'n':
-				fh::createFile(*argv[flag + 1]);
+			case NEW:
+				fh::createFile(argv[flag + 1]);
 				break;
 
-			case 'r':
-				fh::readFile(*argv[flag + 1]);
+			case READ:
+				fh::readFile(argv[flag + 1]);
 				break;
 
 			default:
@@ -33,14 +33,10 @@ int main(int argc, char* argv[])
 			}
 		}
 
-		else if (*argv[flag] == 'c')
+		else if (*argv[flag] == COPY)
 		{
-			fh::copyFile(*argv[flag + 1], *argv[flag + 2]);
-		}
-
-		else if (*argv[flag] == 'w')
-		{
-			fh::writeToFile(*argv[flag + 1], *argv[flag + 2]);
+			fh::copyFile(argv[flag + 1], argv[flag + 2]);
+			flag++;
 		}
 	}
 }
