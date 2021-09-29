@@ -54,6 +54,23 @@ public:
 			std::cerr << _path << " not found.\n\n";
 	}
 
+	static void writeToFile(const char* _path, const char* _msg = "")
+	{
+		std::ifstream __existence(_path);
+		if (__existence)
+		{
+			std::ofstream __newFile(_path);
+
+			if (__newFile)
+			{
+				__newFile << _msg;
+				__newFile.close();
+			}
+			else std::cerr << "Error writing to file\n";
+		}
+		else std::cerr << "File does not exist\n";
+	}
+
 	static void removeFile(const char* _path)
 	{
 		if (remove(_path) != 0) std::cerr << "Error Deleting File " << _path << "\n";
