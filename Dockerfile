@@ -9,6 +9,8 @@ RUN apt-get update
 RUN apt-get install -yq cmake gcc g++
 RUN apt-get install -yq git
 RUN apt-get install -yq libcurl4-openssl-dev
+RUN apt-get install -yq libboost-all-dev
+RUN apt-get install -yq libssl-dev
 
 RUN mkdir EW_LibraryHub
 WORKDIR /EW_LibraryHub/

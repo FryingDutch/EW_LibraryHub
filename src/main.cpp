@@ -1,18 +1,13 @@
-#include "EW_FileHandler.h"
+#define CROW_MAIN
 #include "crow.h"
 
-bool isDigit(std::string& str)
-{
-	{
-		for (size_t i = 0; i < str.length(); i++)
-		{
-			if (!std::isdigit(str[i])) return false;
-		}
-		return true;
-	}
-}
-
 int main()
-{ 
-	crow::SimpleApp	app;
+{
+    crow::SimpleApp app;
+
+    CROW_ROUTE(app, "/hello")([]() {
+        return "Hello world";
+    });
+
+    app.port(8000).run();
 }

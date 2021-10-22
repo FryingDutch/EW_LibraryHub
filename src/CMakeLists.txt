@@ -8,5 +8,6 @@ add_executable(fileServer
 
 find_package(CURL REQUIRED)
 target_link_libraries(fileServer ${CURL_LIBRARIES})
+target_link_libraries(fileServer ${CMAKE_THREAD_LIBS_INIT})
 
 
