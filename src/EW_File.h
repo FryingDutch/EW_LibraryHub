@@ -4,17 +4,17 @@
 class EW_File
 {
 private:
-	const char* location;
+	std::string location = "files/";
 
 public:
 	std::stringstream data;
 
 public:
 	EW_File() = default;
-	EW_File(const char* _path) :
-		location(_path)
+	EW_File(const char* _path)
 	{
-		std::ifstream __file(_path);
+		location += _path;
+		std::ifstream __file(location);
 		if (__file)
 		{
 			data << __file.rdbuf();
@@ -22,5 +22,5 @@ public:
 		}
 	}
 
-	const char* getLocation() { return location; }
+	std::string getLocation() { return location; }
 };
