@@ -10,8 +10,8 @@ int main(int argc, char* argv[])
     EW_FileHandler::setWorkDir("/files/");
     CROW_ROUTE(app, "/hello")([]() 
     {
-        EW_FileHandler::createFile("newFile.txt", "Hi");
-        return "Hello world";
+        EW_FileHandler::createFile("newFile.txt", "Hello buddy!");
+        return EW_FileHandler::readFile("newFile.txt");
     });
 
     uint16_t port = std::stoi(argv[1]);

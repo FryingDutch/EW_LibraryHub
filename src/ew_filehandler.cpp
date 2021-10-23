@@ -1,3 +1,5 @@
+#include <sstream>
+#include <fstream>
 #include "EW_FileHandler.h"
 
 std::string EW_FileHandler::workDir{ "/" };
@@ -57,15 +59,21 @@ void EW_FileHandler::copyFile(const char* _sourcePath, const char* _destinationP
 	}
 }
 
-void EW_FileHandler::readFile(const char* _name)
+std::string EW_FileHandler::readFile(const char* _name)
 {
 	std::string fullPath{ workDir + _name };
+	std::ostringstream ss;
+	std::string result;
 
 	std::ifstream fileToRead(fullPath);
 	if (fileToRead)
-		std::cout << fileToRead.rdbuf() << "\n\n";
+	{
+		ss << fileToRead.rdbuf();		
+		fileToRead.close();
+		return ss.str();
+	}
 	else
-		std::cerr << fullPath << " not found.\n\n";
+		return result = "file not found";
 }
 
 void EW_FileHandler::writeToFile(const char* _name, const char* _msg)
@@ -81,14 +89,18 @@ void EW_FileHandler::writeToFile(const char* _name, const char* _msg)
 			writeFile << _msg << "\n";
 			writeFile.close();
 		}
-		else std::cerr << "Error writing to file\n";
+		else 
+			std::cerr << "Error writing to file\n";
 	}
-	else std::cerr << "File does not exist\n";
+	else 
+		std::cerr << "File does not exist\n";
 }
 
 void EW_FileHandler::removeFile(const char* _name)
 {
 	std::string fullPath{ workDir + _name };
-	if (remove(fullPath.c_str()) != 0) std::cerr << "Error Deleting File " << fullPath << "\n";
-	else std::cout << fullPath << " removed succesfully\n";
+	if (remove(fullPath.c_str()) != 0) 
+		std::cerr << "Error Deleting File " << fullPath << "\n";
+	else 
+		std::cout << fullPath << " removed succesfully\n";
 }
