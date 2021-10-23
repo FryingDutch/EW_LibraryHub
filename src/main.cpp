@@ -1,13 +1,23 @@
 #define CROW_MAIN
 #include "crow.h"
+#include "EW_FileHandler.h"
+#include <iostream>
+#include <string>
 
-int main()
+int main(int argc, char* argv[])
 {
     crow::SimpleApp app;
-
-    CROW_ROUTE(app, "/hello")([]() {
+    EW_FileHandler::setWorkDir("/files/");
+    CROW_ROUTE(app, "/hello")([]() 
+    {
+        EW_FileHandler::createFile("newFile.txt", "Hi");
         return "Hello world";
     });
 
-    app.port(8000).run();
+    uint16_t port = std::stoi(argv[1]);
+
+    for(size_t i = 0; i < argc; i++)
+        std::cout << argv[i] << "\n";
+    
+    app.port(port).run();
 }

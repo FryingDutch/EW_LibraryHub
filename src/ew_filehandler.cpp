@@ -22,9 +22,9 @@ bool EW_FileHandler::checkExistence(const char* _name)
 	return false;
 }
 
-void EW_FileHandler::createFile(const char* _name, const char* _msg)
+void EW_FileHandler::createFile(const char* _path, const char* _msg)
 {
-	std::string fullPath{ workDir + _name };
+	std::string fullPath{ workDir + _path };
 
 	std::ofstream newFile(fullPath);
 	if (newFile)
