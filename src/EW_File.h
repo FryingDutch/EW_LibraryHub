@@ -4,7 +4,7 @@
 class EW_File
 {
 private:
-	std::string location = "files/";
+	std::string location = "/files/";
 
 public:
 	std::stringstream data;

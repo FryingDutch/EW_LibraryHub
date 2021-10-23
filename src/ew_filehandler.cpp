@@ -1,6 +1,6 @@
 #include "EW_FileHandler.h"
 
-std::string EW_FileHandler::workDir{ "" };
+std::string EW_FileHandler::workDir{ "/" };
 std::ifstream EW_FileHandler::readFiles;
 std::ofstream EW_FileHandler::writefiles;
 
@@ -39,16 +39,18 @@ void EW_FileHandler::createFile(const char* _path, const char* _msg)
 
 void EW_FileHandler::copyFile(const char* _sourcePath, const char* _destinationPath)
 {
-	std::ifstream file(_sourcePath);
+	std::string fullPath{ workDir + _sourcePath };
+
+	std::ifstream file(fullPath.c_str());
 
 	if (file)
 	{
-		std::ofstream newFile(_destinationPath);
+		std::ofstream copyFile(_destinationPath);
 
-		if (newFile)
+		if (copyFile)
 		{
-			newFile << file.rdbuf();
-			newFile.close();
+			copyFile << file.rdbuf();
+			copyFile.close();
 		}
 
 		file.close();
@@ -59,9 +61,9 @@ void EW_FileHandler::readFile(const char* _name)
 {
 	std::string fullPath{ workDir + _name };
 
-	std::ifstream file(fullPath);
-	if (file)
-		std::cout << file.rdbuf() << "\n\n";
+	std::ifstream fileToRead(fullPath);
+	if (fileToRead)
+		std::cout << fileToRead.rdbuf() << "\n\n";
 	else
 		std::cerr << fullPath << " not found.\n\n";
 }
@@ -70,16 +72,14 @@ void EW_FileHandler::writeToFile(const char* _name, const char* _msg)
 {
 	std::string fullPath{ workDir + _name };
 
-	std::ifstream searchFile(fullPath);
-	if (searchFile)
+	if (checkExistence(fullPath.c_str()))
 	{
-		searchFile.close();
-		std::ofstream newFile(fullPath);
+		std::ofstream writeFile(fullPath);
 
-		if (newFile)
+		if (writeFile)
 		{
-			newFile << _msg << "\n";
-			newFile.close();
+			writeFile << _msg << "\n";
+			writeFile.close();
 		}
 		else std::cerr << "Error writing to file\n";
 	}
