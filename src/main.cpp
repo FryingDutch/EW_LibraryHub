@@ -1,23 +1,37 @@
 #define CROW_MAIN
 #include "crow.h"
+#include <cpr/cpr.h>
 #include "EW_FileHandler.h"
 #include <iostream>
 #include <string>
 
+bool dev = true;
+
 int main(int argc, char* argv[])
 {
-    crow::SimpleApp app;
-    EW_FileHandler::setWorkDir("/files/");
-    CROW_ROUTE(app, "/hello")([]() 
+    if (!dev)
     {
-        EW_FileHandler::createFile("newFile.txt", "Hello buddy!");
-        return EW_FileHandler::readFile("newFile.txt");
-    });
+        crow::SimpleApp app;
+        EW_FileHandler::setWorkDir("/files/");
+        CROW_ROUTE(app, "/hello")([]()
+        {
+            EW_FileHandler::createFile("newFile.txt", "Hello buddy!");
+            return EW_FileHandler::readFile("newFile.txt");
+        });
 
-    uint16_t port = std::stoi(argv[1]);
+        uint16_t port = std::stoi(argv[1]);
 
-    for(size_t i = 0; i < argc; i++)
-        std::cout << argv[i] << "\n";
-    
-    app.port(port).run();
+        for (size_t i = 0; i < argc; i++)
+            std::cout << argv[i] << "\n";
+
+        app.port(port).run();
+    }
+
+    else if (dev)
+    {
+        cpr::Response r = cpr::Get(cpr::Url{ "http://google.com" });
+        r.status_code;                  // 200
+        r.header["content-type"];       // application/json; charset=utf-8
+        std::cout << r.text << "\n";    // JSON text string
+    }
 }
