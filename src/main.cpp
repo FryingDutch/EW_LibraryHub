@@ -29,9 +29,7 @@ int main(int argc, char* argv[])
 
     else if (dev)
     {
-        cpr::Response r = cpr::Get(cpr::Url{ "http://google.com" });
-        r.status_code;                  // 200
-        r.header["content-type"];       // application/json; charset=utf-8
-        std::cout << r.text << "\n";    // JSON text string
+        cpr::Response r = cpr::Get(cpr::Url{ "http://85.214.137.31:8000/hello" });
+        std::cout << r.text << "\n"; 
     }
 }

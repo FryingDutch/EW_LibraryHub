@@ -1,15 +1,19 @@
 cmake_minimum_required(VERSION 3.0)
 project ( fileServer )
 
+set(MY_LIB_INCLUDE_DIRS /EW_LibraryHub/cpr/include/)
+include_directories(fileServer PUBLIC ${MY_LIB_INCLUDE_DIRS})
+
+find_library(CPR libcpr.a REQUIRED PATHS /EW_LibraryHub/cpr/build/lib/libcpr.a)
+
 add_executable(fileServer 
 		ew_filehandler.cpp
 		main.cpp
 		)
 
-find_package(CURL REQUIRED)
-target_link_libraries(fileServer OpenSSL::SSL)
-target_link_libraries(fileServer ${CURL_LIBRARIES})
-target_link_libraries(fileServer ${CMAKE_THREAD_LIBS_INIT})
-target_link_libraries(fileServer cpr::cpr)
+target_link_libraries(fileServer PUBLIC ${MYLIB})
+target_link_libraries(fileServer PUBLIC OpenSSL::SSL)
+target_link_libraries(fileServer PUBLIC ${CURL_LIBRARIES})
+target_link_libraries(fileServer PUBLIC ${CMAKE_THREAD_LIBS_INIT})
 
 

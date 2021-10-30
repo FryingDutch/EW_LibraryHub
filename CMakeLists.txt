@@ -11,10 +11,6 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 find_package(Tcmalloc)
 find_package(Threads)
 
-include(FetchContent)
-FetchContent_Declare(cpr GIT_REPOSITORY https://github.com/libcpr/cpr.git GIT_TAG f4622efcb59d84071ae11404ae61bd821c1c344b)
-FetchContent_MakeAvailable(cpr)
-
 set(OPENSSL_USE_STATIC_LIBS TRUE)
 find_package(OpenSSL REQUIRED)
 
@@ -45,6 +41,8 @@ else()
 	find_package( Boost 1.71 COMPONENTS system thread REQUIRED )
 	
 endif()
+
+find_package(CURL REQUIRED)
 
 include_directories( ${OPENSSL_INCLUDE_DIR} )
 include_directories( ${Boost_INCLUDE_DIR} )

@@ -3,7 +3,7 @@
 
 FROM ubuntu:latest AS base
 
-FROM base AS builder
+FROM base AS dependencies
 # install cmake, gcc, g++, boost, and git
 RUN apt-get update &&\
     apt-get install -yq cmake gcc g++ &&\
@@ -15,24 +15,28 @@ RUN apt-get update &&\
 
 WORKDIR /EW_LibraryHub/
 
+RUN mkdir include
+RUN git clone --branch 1.6.2 https://github.com/libcpr/cpr &&\
+    cd cpr && mkdir build && cd build &&\
+    cmake .. -DBUILD_SHARED_LIBS=False &&\
+    make
+
 RUN git clone --branch v0.3 https://github.com/CrowCpp/crow &&\
-    cp -r crow/include include &&\
+    cp -r crow/include/. include &&\
     mkdir build
 
-FROM builder AS builddev
+FROM dependencies AS depdev
 CMD [ "/bin/bash" ]
 
 # copy all of the source files to the image
-FROM builder AS finalbuild
+FROM dependencies AS builder
 COPY ./ ./
-
-# build the app
 WORKDIR build
 RUN cmake .. &&\
     make 
 
-FROM finalbuild AS builderdev
+FROM builder AS builderdev
 CMD [ "/bin/bash" ]
 
-FROM finalbuild AS production
+FROM builder AS production
 ENTRYPOINT ["src/fileServer"]

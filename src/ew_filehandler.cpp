@@ -73,7 +73,10 @@ std::string EW_FileHandler::readFile(const char* _name)
 		return ss.str();
 	}
 	else
-		return result = "file not found";
+	{
+		result = "file not found";
+		return result;
+	}
 }
 
 void EW_FileHandler::writeToFile(const char* _name, const char* _msg)
