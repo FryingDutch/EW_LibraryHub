@@ -29,7 +29,7 @@ int main(int argc, char* argv[])
 
     else if (dev)
     {
-        cpr::Response r = cpr::Get(cpr::Url{ "http://85.214.137.31:8000/hello" });
+        cpr::Response r = cpr::Get(cpr::Url{ "http://google.com" });
         std::cout << r.text << "\n"; 
     }
 }
