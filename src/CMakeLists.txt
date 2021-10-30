@@ -4,7 +4,7 @@ project ( fileServer )
 set(MY_LIB_INCLUDE_DIRS /EW_LibraryHub/cpr/include/)
 include_directories(fileServer PUBLIC ${MY_LIB_INCLUDE_DIRS})
 
-find_library(CPR libcpr.a REQUIRED PATHS /EW_LibraryHub/cpr/build/lib/libcpr.a)
+link_directories(/EW_LibraryHub/cpr/build/lib)
 
 add_executable(fileServer 
 		ew_filehandler.cpp
